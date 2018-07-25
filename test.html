@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <!--使用方法：1.引入mock.js-->
+    <script src="https://unpkg.com/mockjs"></script>
+    <!--2.引入过后全局对象上会多一个mock对象-->
+    <!--3.mock对象中最常用的就是mock方法-->
+    <script src="https://unpkg.com/jquery"></script>
+    <script>
+        // ...method No.1
+        // request a data interface from backend and want to get the data that we want
+        // the real data interface is '/users', but it is not finished yet by backend developers
+        // we can not wait until the data interface done, because it will take long time, so we mock a data interface
+        // replacing the real data interface.
+        // user.json is the data that we mocked
+
+        // $.get('http://localhost/mockjs/users.json',function(res){
+        //     console.log(res);
+        // })
+
+
+        //...method No.2
+        //mockjs.com/examples.html  third-party mocked data and return a random data.
+
+        //拦截请求，返回假数据
+        //真的'/users'的request被拦截了，假装发过去了，然后返回一个自定义的假数据hello:'mock.js'
+        Mock.mock('/users','get',{
+            hello:'mock.js'
+        })
+        $.get('/users',function(res){
+            console.log(res);
+        })
+        //'／products'就没有被拦截，真的request发过去了，但是没有products这个文件， 所以inspect里的network里会显示404 not found
+        $.get('/products',function(res){
+            console.log(res);
+        })
+
+
+        //...method No.3
+        //之前的例子只能获取一个数据，也都很简单。但是一旦需要持续性的操作数据，比如发表一篇文章想保存下来。
+        //json-server 提供json数据的服务器
+        //30s中提供一种零编码的方式完成一个RESTful API(表针状态转移风格)，面向资源编程：在用应用开发时，最大的特点是以用户友好的方式去呈现数据，资源就是一类数据。在开发时，会有很多类的数据，如：用户资源（数据），产品资源（数据），订单资源（数据）。
+        //重点是：如何表示一个资源？如：大家一起出去玩？都有谁？人的名字就是资源。所以引出概念：用地址来描述资源。
+        // ex: -http://api.demo.com/users  看到这个地址就会想到给我返回所有用户的资源是什么
+        // ex: -http://api.demo.com/products  看到这个地址就会想到给我返回所有产品的资源是什么
+        // ex: -http://api.demo.com/categories  看到这个地址就会想到给我返回所有分类的资源是什么
+        // ex: -http://api.demo.com/produtcts/iphone  看到这个地址就会想到给我返回特指iphone这个产品的信息
+        // ex: -http://api.demo.com/users/1/articles 用户为1的所有的文章
+        // 既然有了资源，我们就可以对它增删改查。
+        // 在HTTP协议中，对每一个请求url都会有不同的谓词 GET查/POST增/PUT整体更新/PATCH部分更新/DELETE删
+        //这种接口的风格就是RESTful API
+        //https://github.com/typicode/json-server
+        //https://jsonplaceholder.typicode.com
+        // 先安装jason-server..官网安装30mins，特别大，但安装完了去实现就3mins
+        // using Postman to adjust the data interface
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+ "post":[{"id":1,"title":"json-server","author":"typicode"}],
+  "comments":[{"id":1,"body":"a lot of comments","postId":1}],
+  "profile":{"name":"typicode"}
+}
